@@ -47,6 +47,15 @@ describe('gameboard functions', () => {
         expect(testGameboard.getBoard()).toEqual(new Array(10).fill(new Array(10).fill(0)));
     });
 
+    test('trying to placeShip() the sixth time', () => {
+        testGameboard.placeShip(1, 2, 3, 'horizontal');
+        testGameboard.placeShip(1, 8, 1, 'vertical');
+        testGameboard.placeShip(1, 0, 0, 'horizontal');
+        testGameboard.placeShip(1, 9, 9, 'vertical');
+        testGameboard.placeShip(1, 4, 4, 'horizontal');
+        expect(testGameboard.placeShip(1, 7, 7, 'vertical')).toBe('The maximum number of ships (5) has been reached.');
+    });
+
     test('placeShip() - invalid ship length', () => {
         expect(testGameboard.placeShip(-1, 0, 0, 'horizontal')).toBe('The ship length must be from 0 to 5.');
     });

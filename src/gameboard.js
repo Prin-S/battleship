@@ -13,7 +13,9 @@ function gameboard() {
     const getShips = () => ships;
 
     const placeShip = (shipLength, startingX, startingY, direction) => {
-        ships.push(ship(shipLength).getShipLength());
+        if (ships.length >= 5) {
+            return 'The maximum number of ships (5) has been reached.';
+        }
 
         if (shipLength < 1 || shipLength > 5) {
             return 'The ship length must be from 0 to 5.';
@@ -48,6 +50,8 @@ function gameboard() {
                 board[startingY + i][startingX] = 1;
             }
         }
+
+        ships.push(ship(shipLength).getShipLength());
 
         return board;
     }
