@@ -127,9 +127,42 @@ describe('gameboard functions', () => {
         expect(testGameboard.placeShip(4, 5, 1, 'vertical')).toBe('Invalid position - at least one square is occupied.');
     });
 
-    test('placeShip() two times and then getShips()', () => {
+    test('placeShip() two times and then getShips().length', () => {
         testGameboard.placeShip(5, 2, 3, 'horizontal');
         testGameboard.placeShip(4, 8, 1, 'vertical');
-        expect(testGameboard.getShips()).toEqual([5, 4]);
+        expect(testGameboard.getShips().length).toBe(2);
+    });
+
+    test('placeShip() five times', () => {
+        testGameboard.placeShip(5, 2, 3, 'horizontal');
+        testGameboard.placeShip(4, 8, 1, 'vertical');
+        testGameboard.placeShip(3, 0, 0, 'horizontal');
+        testGameboard.placeShip(3, 9, 7, 'vertical');
+        testGameboard.placeShip(2, 4, 4, 'horizontal');
+        expect(testGameboard.getBoard()).toEqual([
+            [3, 3, 3, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 2, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 2, 0],
+            [0, 0, 1, 1, 1, 1, 1, 0, 2, 0],
+            [0, 0, 0, 0, 5, 5, 0, 0, 2, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 4],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 4],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 4]
+        ]);
+    });
+
+    test('placeShip() five times and then receiveAttack()', () => {
+        testGameboard.placeShip(5, 2, 3, 'horizontal');
+        testGameboard.placeShip(4, 8, 1, 'vertical');
+        testGameboard.placeShip(3, 0, 0, 'horizontal');
+        testGameboard.placeShip(3, 9, 7, 'vertical');
+        testGameboard.placeShip(2, 4, 4, 'horizontal');
+        //console.log(testGameboard.getBoard());
+        expect(testGameboard.receiveAttack(4, 4)).toBe('Hit!');
+        expect(testGameboard.receiveAttack(2, 2)).toBe('Miss!');
+        expect(testGameboard.receiveAttack(5, 4)).toBe('Hit - ship sunk!');
+        console.log(testGameboard.getBoard());
     });
 });

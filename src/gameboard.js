@@ -25,17 +25,19 @@ function gameboard() {
             return 'The grid position must be from 0 to 9.';
         }
 
+        const shipNumber = ships.length + 1; // An empty square is 0, so + 1 so that shipNumber starts at 1.
+
         if (direction == 'horizontal') {
             if (startingX + shipLength > 10) {
                 return 'Invalid position - the ship will fall outside the gameboard.';
             }
 
             for (let i = 0; i < shipLength; i++) {
-                if (board[startingY][startingX + i] == 1) {
+                if (board[startingY][startingX + i] > 0) { // Number more than 0 means there is a ship in the square.
                     return 'Invalid position - at least one square is occupied.';
                 }
 
-                board[startingY][startingX + i] = 1;
+                board[startingY][startingX + i] = shipNumber; // Mark the square with shipNumber.
             }
         } else {
             if (startingY + shipLength > 10) {
@@ -43,20 +45,38 @@ function gameboard() {
             }
 
             for (let i = 0; i < shipLength; i++) {
-                if (board[startingY + i][startingX] == 1) {
+                if (board[startingY + i][startingX] > 0) { // Number more than 0 means there is a ship in the square.
                     return 'Invalid position - at least one square is occupied.';
                 }
 
-                board[startingY + i][startingX] = 1;
+                board[startingY + i][startingX] = shipNumber; // Mark the square with shipNumber.
             }
         }
 
-        ships.push(ship(shipLength).getShipLength());
+        ships.push(ship(shipLength));
 
         return board;
     }
 
-    return { getBoard, getShips, placeShip };
+    const receiveAttack = (x, y) => {
+        if (board[y][x] > 0) {
+            const pos = board[y][x]; // Get the ship number.
+            ships[pos - 1].hit(); // Damage the ship.
+            board[y][x] = 'X'; // Mark the square with an 'X'.
+
+            if (ships[pos - 1].isSunk()) {
+                return 'Hit - ship sunk!';
+            }
+
+            return 'Hit!';
+        } else {
+            board[y][x] = '-'; // Mark the square with a '-'.
+
+            return 'Miss!';
+        }
+    }
+
+    return { getBoard, getShips, placeShip, receiveAttack };
 }
 
 export { gameboard };
