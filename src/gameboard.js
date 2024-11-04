@@ -8,9 +8,21 @@ function gameboard() {
     // so when something is changed in one, it will affect all elements.
     
     const ships = [];
+    let hitCount = 0;
+    let missedCount = 0;
+    let allSunk = false;
 
     const getBoard = () => board;
     const getShips = () => ships;
+    const getHitCount = () => hitCount;
+    const getMissedCount = () => missedCount;
+    const checkAllSunk = () => {
+        if (ships.every(ship => ship.isSunk())) {
+            return allSunk = true;
+        } else {
+            return allSunk = false;
+        }
+    };
 
     const placeShip = (shipLength, startingX, startingY, direction) => {
         if (ships.length >= 5) {
@@ -59,10 +71,19 @@ function gameboard() {
     }
 
     const receiveAttack = (x, y) => {
+        if (board[y][x] == 'X') {
+            return 'The square has already been selected - hit.';
+        }
+
+        if (board[y][x] == '-') {
+            return 'The square has already been selected - miss.';
+        }
+
         if (board[y][x] > 0) {
-            const pos = board[y][x]; // Get the ship number.
-            ships[pos - 1].hit(); // Damage the ship.
+            const pos = board[y][x]; // Get the ship number (1-5).
+            ships[pos - 1].hit(); // Damage the ship. -1 because arrays start at index 0.
             board[y][x] = 'X'; // Mark the square with an 'X'.
+            hitCount += 1;
 
             if (ships[pos - 1].isSunk()) {
                 return 'Hit - ship sunk!';
@@ -71,12 +92,13 @@ function gameboard() {
             return 'Hit!';
         } else {
             board[y][x] = '-'; // Mark the square with a '-'.
+            missedCount += 1;
 
             return 'Miss!';
         }
     }
 
-    return { getBoard, getShips, placeShip, receiveAttack };
+    return { getBoard, getShips, getHitCount, getMissedCount, checkAllSunk, placeShip, receiveAttack };
 }
 
 export { gameboard };

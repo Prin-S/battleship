@@ -53,6 +53,7 @@ describe('gameboard functions', () => {
         testGameboard.placeShip(1, 0, 0, 'horizontal');
         testGameboard.placeShip(1, 9, 9, 'vertical');
         testGameboard.placeShip(1, 4, 4, 'horizontal');
+
         expect(testGameboard.placeShip(1, 7, 7, 'vertical')).toBe('The maximum number of ships (5) has been reached.');
     });
 
@@ -124,12 +125,14 @@ describe('gameboard functions', () => {
 
     test('placeShip() two times - at least one square is occupied', () => {
         testGameboard.placeShip(5, 2, 3, 'horizontal');
+
         expect(testGameboard.placeShip(4, 5, 1, 'vertical')).toBe('Invalid position - at least one square is occupied.');
     });
 
     test('placeShip() two times and then getShips().length', () => {
         testGameboard.placeShip(5, 2, 3, 'horizontal');
         testGameboard.placeShip(4, 8, 1, 'vertical');
+
         expect(testGameboard.getShips().length).toBe(2);
     });
 
@@ -139,6 +142,7 @@ describe('gameboard functions', () => {
         testGameboard.placeShip(3, 0, 0, 'horizontal');
         testGameboard.placeShip(3, 9, 7, 'vertical');
         testGameboard.placeShip(2, 4, 4, 'horizontal');
+
         expect(testGameboard.getBoard()).toEqual([
             [3, 3, 3, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 2, 0],
@@ -153,16 +157,38 @@ describe('gameboard functions', () => {
         ]);
     });
 
-    test('placeShip() five times and then receiveAttack()', () => {
+    test('placeShip() five times and then receiveAttack(), getHitCount(), and getMissedCount()', () => {
         testGameboard.placeShip(5, 2, 3, 'horizontal');
         testGameboard.placeShip(4, 8, 1, 'vertical');
         testGameboard.placeShip(3, 0, 0, 'horizontal');
         testGameboard.placeShip(3, 9, 7, 'vertical');
         testGameboard.placeShip(2, 4, 4, 'horizontal');
-        //console.log(testGameboard.getBoard());
+
         expect(testGameboard.receiveAttack(4, 4)).toBe('Hit!');
         expect(testGameboard.receiveAttack(2, 2)).toBe('Miss!');
         expect(testGameboard.receiveAttack(5, 4)).toBe('Hit - ship sunk!');
-        console.log(testGameboard.getBoard());
+        expect(testGameboard.receiveAttack(4, 4)).toBe('The square has already been selected - hit.');
+        expect(testGameboard.receiveAttack(2, 2)).toBe('The square has already been selected - miss.');
+        expect(testGameboard.receiveAttack(5, 4)).toBe('The square has already been selected - hit.');
+        expect(testGameboard.getHitCount()).toBe(2);
+        expect(testGameboard.getMissedCount()).toBe(1);
+    });
+
+    test('placeShip() five times, receiveAttack(), and checkAllSunk()', () => {
+        testGameboard.placeShip(1, 2, 3, 'horizontal');
+        testGameboard.placeShip(1, 8, 1, 'vertical');
+        testGameboard.placeShip(1, 0, 0, 'horizontal');
+        testGameboard.placeShip(1, 9, 7, 'vertical');
+        testGameboard.placeShip(1, 4, 4, 'horizontal');
+        testGameboard.receiveAttack(2, 3);
+        testGameboard.receiveAttack(8, 1);
+        testGameboard.receiveAttack(0, 0);
+        testGameboard.receiveAttack(9, 7);
+        
+        expect(testGameboard.checkAllSunk()).toBeFalsy();
+        
+        testGameboard.receiveAttack(4, 4);
+        
+        expect(testGameboard.checkAllSunk()).toBeTruthy();
     });
 });
