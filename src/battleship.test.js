@@ -194,6 +194,37 @@ describe('gameboard functions', () => {
     });
 });
 
-describe('player functions', () => {
+describe('player functions - getGameboard() for computer player', () => {
+    let testPlayer = player('com');
 
+    test('getGameboard() length', () => {
+        console.log(testPlayer.getGameboard());
+        expect(testPlayer.getGameboard().length).toBe(10);
+    });
+
+    test('getGameboard() must contain one five-square ship', () => {
+        expect(testPlayer.getGameboard().flat()).toContain(1);
+        expect(testPlayer.getGameboard().flat().filter(num => num == 1).length).toBe(5); // 1 must occur five times to represent a five-square ship.
+    });
+
+    test('getGameboard() must contain one four-square ship', () => {
+        expect(testPlayer.getGameboard().flat()).toContain(2);
+        expect(testPlayer.getGameboard().flat().filter(num => num == 2).length).toBe(4); // 2 must occur four times to represent a four-square ship.
+    });
+
+    test('getGameboard() must contain two three-square ships', () => {
+        expect(testPlayer.getGameboard().flat()).toContain(3);
+        expect(testPlayer.getGameboard().flat().filter(num => num == 3).length).toBe(3); // 3 must occur three times to represent a three-square ship.
+        expect(testPlayer.getGameboard().flat()).toContain(4);
+        expect(testPlayer.getGameboard().flat().filter(num => num == 4).length).toBe(3); // 4 must occur three times to represent a three-square ship.
+    });
+
+    test('getGameboard() must contain one two-square ship', () => {
+        expect(testPlayer.getGameboard().flat()).toContain(5);
+        expect(testPlayer.getGameboard().flat().filter(num => num == 5).length).toBe(2); // 5 must occur two times to represent a two-square ship.
+    });
+
+    test('getGameboard() value of all five ships', () => {
+        expect(testPlayer.getGameboard().flat().reduce((acc, cur) => acc + cur, 0)).toBe(44); // (1 * 5) + (2 * 4) + (3 * 3) + (4 * 3) + (5 * 2) = 44 (the value of all five ships)
+    });
 });

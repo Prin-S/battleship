@@ -44,11 +44,13 @@ function gameboard() {
                 return 'Invalid position - the ship will fall outside the gameboard.';
             }
 
-            for (let i = 0; i < shipLength; i++) {
+            for (let i = 0; i < shipLength; i++) { // The first loop checks if there is any invalid square.
                 if (board[startingY][startingX + i] > 0) { // Number more than 0 means there is a ship in the square.
-                    return 'Invalid position - at least one square is occupied.';
+                    return 'Invalid position - at least one square is occupied.'; // return to prevent the second loop from running.
                 }
+            }
 
+            for (let i = 0; i < shipLength; i++) { // The second loop places the ship.
                 board[startingY][startingX + i] = shipNumber; // Mark the square with shipNumber.
             }
         } else if (direction == 1) { // 1 means vertical.
@@ -56,11 +58,13 @@ function gameboard() {
                 return 'Invalid position - the ship will fall outside the gameboard.';
             }
 
-            for (let i = 0; i < shipLength; i++) {
+            for (let i = 0; i < shipLength; i++) { // The first loop checks if there is any invalid square.
                 if (board[startingY + i][startingX] > 0) { // Number more than 0 means there is a ship in the square.
-                    return 'Invalid position - at least one square is occupied.';
+                    return 'Invalid position - at least one square is occupied.'; // return to prevent the second loop from running.
                 }
+            }
 
+            for (let i = 0; i < shipLength; i++) { // The second loop places the ship.
                 board[startingY + i][startingX] = shipNumber; // Mark the square with shipNumber.
             }
         }
