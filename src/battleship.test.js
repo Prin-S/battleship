@@ -1,5 +1,6 @@
 import { ship } from './ship.js';
 import { gameboard } from './gameboard.js';
+import { player } from './player.js';
 
 describe('ship functions', () => {
     describe('ship one: length = 5', () => {
@@ -48,37 +49,37 @@ describe('gameboard functions', () => {
     });
 
     test('trying to placeShip() the sixth time', () => {
-        testGameboard.placeShip(1, 2, 3, 'horizontal');
-        testGameboard.placeShip(1, 8, 1, 'vertical');
-        testGameboard.placeShip(1, 0, 0, 'horizontal');
-        testGameboard.placeShip(1, 9, 9, 'vertical');
-        testGameboard.placeShip(1, 4, 4, 'horizontal');
+        testGameboard.placeShip(1, 2, 3, 0);
+        testGameboard.placeShip(1, 8, 1, 1);
+        testGameboard.placeShip(1, 0, 0, 0);
+        testGameboard.placeShip(1, 9, 9, 1);
+        testGameboard.placeShip(1, 4, 4, 0);
 
-        expect(testGameboard.placeShip(1, 7, 7, 'vertical')).toBe('The maximum number of ships (5) has been reached.');
+        expect(testGameboard.placeShip(1, 7, 7, 1)).toBe('The maximum number of ships (5) has been reached.');
     });
 
     test('placeShip() - invalid ship length', () => {
-        expect(testGameboard.placeShip(-1, 0, 0, 'horizontal')).toBe('The ship length must be from 0 to 5.');
+        expect(testGameboard.placeShip(-1, 0, 0, 0)).toBe('The ship length must be from 0 to 5.');
     });
 
     test('placeShip() - invalid ship length', () => {
-        expect(testGameboard.placeShip(6, 0, 0, 'horizontal')).toBe('The ship length must be from 0 to 5.');
+        expect(testGameboard.placeShip(6, 0, 0, 0)).toBe('The ship length must be from 0 to 5.');
     });
 
     test('placeShip() - invalid X grid position', () => {
-        expect(testGameboard.placeShip(2, -1, 0, 'horizontal')).toBe('The grid position must be from 0 to 9.');
+        expect(testGameboard.placeShip(2, -1, 0, 0)).toBe('The grid position must be from 0 to 9.');
     });
 
     test('placeShip() - invalid Y grid position', () => {
-        expect(testGameboard.placeShip(2, 0, 10, 'horizontal')).toBe('The grid position must be from 0 to 9.');
+        expect(testGameboard.placeShip(2, 0, 10, 0)).toBe('The grid position must be from 0 to 9.');
     });
 
     test('placeShip() - invalid X and Y grid position', () => {
-        expect(testGameboard.placeShip(2, -1, 10, 'horizontal')).toBe('The grid position must be from 0 to 9.');
+        expect(testGameboard.placeShip(2, -1, 10, 0)).toBe('The grid position must be from 0 to 9.');
     });
 
     test('placeShip() horizontal', () => {
-        expect(testGameboard.placeShip(5, 2, 3, 'horizontal')).toEqual([
+        expect(testGameboard.placeShip(5, 2, 3, 0)).toEqual([
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -93,15 +94,15 @@ describe('gameboard functions', () => {
     });
 
     test('placeShip() horizontal - invalid', () => {
-        expect(testGameboard.placeShip(5, 6, 0, 'horizontal')).toBe('Invalid position - the ship will fall outside the gameboard.');
+        expect(testGameboard.placeShip(5, 6, 0, 0)).toBe('Invalid position - the ship will fall outside the gameboard.');
     });
 
     test('placeShip() horizontal - invalid', () => {
-        expect(testGameboard.placeShip(5, 6, 9, 'horizontal')).toBe('Invalid position - the ship will fall outside the gameboard.');
+        expect(testGameboard.placeShip(5, 6, 9, 0)).toBe('Invalid position - the ship will fall outside the gameboard.');
     });
 
     test('placeShip() vertical', () => {
-        expect(testGameboard.placeShip(4, 5, 1, 'vertical')).toEqual([
+        expect(testGameboard.placeShip(4, 5, 1, 1)).toEqual([
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
@@ -116,32 +117,32 @@ describe('gameboard functions', () => {
     });
 
     test('placeShip() vertical - invalid', () => {
-        expect(testGameboard.placeShip(5, 0, 6, 'vertical')).toBe('Invalid position - the ship will fall outside the gameboard.');
+        expect(testGameboard.placeShip(5, 0, 6, 1)).toBe('Invalid position - the ship will fall outside the gameboard.');
     });
 
     test('placeShip() vertical - invalid', () => {
-        expect(testGameboard.placeShip(5, 9, 6, 'vertical')).toBe('Invalid position - the ship will fall outside the gameboard.');
+        expect(testGameboard.placeShip(5, 9, 6, 1)).toBe('Invalid position - the ship will fall outside the gameboard.');
     });
 
     test('placeShip() two times - at least one square is occupied', () => {
-        testGameboard.placeShip(5, 2, 3, 'horizontal');
+        testGameboard.placeShip(5, 2, 3, 0);
 
-        expect(testGameboard.placeShip(4, 5, 1, 'vertical')).toBe('Invalid position - at least one square is occupied.');
+        expect(testGameboard.placeShip(4, 5, 1, 1)).toBe('Invalid position - at least one square is occupied.');
     });
 
     test('placeShip() two times and then getShips().length', () => {
-        testGameboard.placeShip(5, 2, 3, 'horizontal');
-        testGameboard.placeShip(4, 8, 1, 'vertical');
+        testGameboard.placeShip(5, 2, 3, 0);
+        testGameboard.placeShip(4, 8, 1, 1);
 
         expect(testGameboard.getShips().length).toBe(2);
     });
 
     test('placeShip() five times', () => {
-        testGameboard.placeShip(5, 2, 3, 'horizontal');
-        testGameboard.placeShip(4, 8, 1, 'vertical');
-        testGameboard.placeShip(3, 0, 0, 'horizontal');
-        testGameboard.placeShip(3, 9, 7, 'vertical');
-        testGameboard.placeShip(2, 4, 4, 'horizontal');
+        testGameboard.placeShip(5, 2, 3, 0);
+        testGameboard.placeShip(4, 8, 1, 1);
+        testGameboard.placeShip(3, 0, 0, 0);
+        testGameboard.placeShip(3, 9, 7, 1);
+        testGameboard.placeShip(2, 4, 4, 0);
 
         expect(testGameboard.getBoard()).toEqual([
             [3, 3, 3, 0, 0, 0, 0, 0, 0, 0],
@@ -158,11 +159,11 @@ describe('gameboard functions', () => {
     });
 
     test('placeShip() five times and then receiveAttack(), getHitCount(), and getMissedCount()', () => {
-        testGameboard.placeShip(5, 2, 3, 'horizontal');
-        testGameboard.placeShip(4, 8, 1, 'vertical');
-        testGameboard.placeShip(3, 0, 0, 'horizontal');
-        testGameboard.placeShip(3, 9, 7, 'vertical');
-        testGameboard.placeShip(2, 4, 4, 'horizontal');
+        testGameboard.placeShip(5, 2, 3, 0);
+        testGameboard.placeShip(4, 8, 1, 1);
+        testGameboard.placeShip(3, 0, 0, 0);
+        testGameboard.placeShip(3, 9, 7, 1);
+        testGameboard.placeShip(2, 4, 4, 0);
 
         expect(testGameboard.receiveAttack(4, 4)).toBe('Hit!');
         expect(testGameboard.receiveAttack(2, 2)).toBe('Miss!');
@@ -175,11 +176,11 @@ describe('gameboard functions', () => {
     });
 
     test('placeShip() five times, receiveAttack(), and checkAllSunk()', () => {
-        testGameboard.placeShip(1, 2, 3, 'horizontal');
-        testGameboard.placeShip(1, 8, 1, 'vertical');
-        testGameboard.placeShip(1, 0, 0, 'horizontal');
-        testGameboard.placeShip(1, 9, 7, 'vertical');
-        testGameboard.placeShip(1, 4, 4, 'horizontal');
+        testGameboard.placeShip(1, 2, 3, 0);
+        testGameboard.placeShip(1, 8, 1, 1);
+        testGameboard.placeShip(1, 0, 0, 0);
+        testGameboard.placeShip(1, 9, 7, 1);
+        testGameboard.placeShip(1, 4, 4, 0);
         testGameboard.receiveAttack(2, 3);
         testGameboard.receiveAttack(8, 1);
         testGameboard.receiveAttack(0, 0);
@@ -191,4 +192,8 @@ describe('gameboard functions', () => {
         
         expect(testGameboard.checkAllSunk()).toBeTruthy();
     });
+});
+
+describe('player functions', () => {
+
 });

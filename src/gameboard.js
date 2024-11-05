@@ -39,7 +39,7 @@ function gameboard() {
 
         const shipNumber = ships.length + 1; // An empty square is 0, so + 1 so that shipNumber starts at 1.
 
-        if (direction == 'horizontal') {
+        if (direction == 0) { // 0 means horizontal.
             if (startingX + shipLength > 10) {
                 return 'Invalid position - the ship will fall outside the gameboard.';
             }
@@ -51,7 +51,7 @@ function gameboard() {
 
                 board[startingY][startingX + i] = shipNumber; // Mark the square with shipNumber.
             }
-        } else {
+        } else if (direction == 1) { // 1 means vertical.
             if (startingY + shipLength > 10) {
                 return 'Invalid position - the ship will fall outside the gameboard.';
             }
