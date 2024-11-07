@@ -231,3 +231,20 @@ describe('player functions - getGameboard() for computer player', () => {
         expect(testPlayer.getGameboard().flat().reduce((acc, cur) => acc + cur, 0)).toBe(44); // (1 * 5) + (2 * 4) + (3 * 3) + (4 * 3) + (5 * 2) = 44 (the value of all five ships)
     });
 });
+
+describe('player functions - getGameboard() for human player', () => {
+    let testPlayer2 = player('hum'); // When asked to enter a value, just press the enter key to skip. Default values are provided.
+
+    expect(testPlayer2.getGameboard()).toEqual([
+        [3, 3, 3, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 2, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 2, 0],
+        [0, 0, 1, 1, 1, 1, 1, 0, 2, 0],
+        [0, 0, 0, 0, 5, 5, 0, 0, 2, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 4],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 4],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 4]
+    ]);
+});
