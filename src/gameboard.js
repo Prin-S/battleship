@@ -33,8 +33,20 @@ function gameboard() {
             return 'The ship length must be from 0 to 5.';
         }
         
-        if (startingX < 0 || startingX > 9 || startingY < 0 || startingY > 9) {
-            return 'The grid position must be from 0 to 9.';
+        if ((startingX < 0 || startingX > 9) && (startingY < 0 || startingY > 9)) {
+            return 'The x and y coordinates must be from 0 to 9.';
+        }
+
+        if (startingX < 0 || startingX > 9) {
+            return 'The x coordinate must be from 0 to 9.';
+        }
+
+        if (startingY < 0 || startingY > 9) {
+            return 'The y coordinate must be from 0 to 9.';
+        }
+
+        if (direction < 0 || direction > 1) {
+            return 'The direction must be 0 (horizontal) or 1 (vertical).';
         }
 
         const shipNumber = ships.length + 1; // An empty square is 0, so + 1 so that shipNumber starts at 1.

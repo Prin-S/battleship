@@ -66,16 +66,20 @@ describe('gameboard functions', () => {
         expect(testGameboard.placeShip(6, 0, 0, 0)).toBe('The ship length must be from 0 to 5.');
     });
 
+    test('placeShip() - invalid X and Y grid position', () => {
+        expect(testGameboard.placeShip(2, -1, 10, 0)).toBe('The x and y coordinates must be from 0 to 9.');
+    });
+
     test('placeShip() - invalid X grid position', () => {
-        expect(testGameboard.placeShip(2, -1, 0, 0)).toBe('The grid position must be from 0 to 9.');
+        expect(testGameboard.placeShip(2, -1, 0, 0)).toBe('The x coordinate must be from 0 to 9.');
     });
 
     test('placeShip() - invalid Y grid position', () => {
-        expect(testGameboard.placeShip(2, 0, 10, 0)).toBe('The grid position must be from 0 to 9.');
+        expect(testGameboard.placeShip(2, 0, 10, 0)).toBe('The y coordinate must be from 0 to 9.');
     });
 
-    test('placeShip() - invalid X and Y grid position', () => {
-        expect(testGameboard.placeShip(2, -1, 10, 0)).toBe('The grid position must be from 0 to 9.');
+    test('placeShip() - invalid direction', () => {
+        expect(testGameboard.placeShip(5, 2, 3, 2)).toBe('The direction must be 0 (horizontal) or 1 (vertical).');
     });
 
     test('placeShip() horizontal', () => {
@@ -198,7 +202,6 @@ describe('player functions - getGameboard() for computer player', () => {
     let testPlayer = player('com');
 
     test('getGameboard() length', () => {
-        console.log(testPlayer.getGameboard());
         expect(testPlayer.getGameboard().length).toBe(10);
     });
 
