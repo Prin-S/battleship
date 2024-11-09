@@ -1,7 +1,7 @@
 import { gameboard } from './gameboard.js';
-import promptSync from 'prompt-sync'; // This is so that we can use prompt() in node (for testing).
+//import promptSync from 'prompt-sync'; // This is so that we can use prompt() in node (for testing).
 
-const prompt = promptSync();
+//const prompt = promptSync();
 
 function getRanInt(num) { // From https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
     return Math.floor(Math.random() * num);

@@ -4,3 +4,100 @@ p, div, span, label, input, button {
     font-family: "Kodchasan", sans-serif;
     font-weight: 400;
 }
+
+#content {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: minmax(50px, auto);
+    column-gap: 10px;
+    row-gap: 10px;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@media (max-width: 992px) {
+    #content {
+        width: 95%;
+    }
+}
+
+@media (min-width: 992px) {  
+    #content {
+        width: 1000px;
+    }
+}
+
+.box {
+    background-color: snow;
+    border: thick double slateblue;
+    border-radius: 10px;
+    padding: 0 10px;
+    text-align: center;
+}
+
+#box1 {
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 1;
+    grid-row-end: 2;
+}
+
+#box2 {
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 2;
+    grid-row-end: 3;
+}
+
+#box3 {
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 1;
+    grid-row-end: 2;
+}
+
+#box4 {
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 2;
+    grid-row-end: 3;
+}
+
+.square {
+    background-color: paleturquoise;
+    padding: 0 0px;
+    text-align: center;
+}
+
+.gameboard {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    aspect-ratio: 1 / 1;
+    column-gap: 1px;
+    row-gap: 1px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.five-square-ship {
+    background-color: navy;
+}
+
+.four-square-ship {
+    background-color: slategray;
+}
+
+.three-square-ship-1 {
+    background-color: seagreen;
+}
+
+.three-square-ship-2 {
+    background-color: darkkhaki;
+}
+
+.two-square-ship {
+    background-color: purple;
+}
