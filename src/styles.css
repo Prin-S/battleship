@@ -87,7 +87,7 @@ p, div, span, label, input, button {
 }
 
 .four-square-ship {
-    background-color: slategray;
+    background-color: saddlebrown;
 }
 
 .three-square-ship-1 {
@@ -100,4 +100,12 @@ p, div, span, label, input, button {
 
 .two-square-ship {
     background-color: purple;
+}
+
+.miss {
+    background-color: gainsboro;
+}
+
+.hit {
+    background-color: red;
 }
