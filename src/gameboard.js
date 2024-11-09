@@ -101,6 +101,10 @@ function gameboard() {
             board[y][x] = 'X'; // Mark the square with an 'X'.
             hitCount += 1;
 
+            if (checkAllSunk()) {
+                return 'Hit - all ships sunk!';
+            }
+
             if (ships[pos - 1].isSunk()) {
                 return 'Hit - ship sunk!';
             }

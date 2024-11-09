@@ -11,6 +11,7 @@ function player(type) {
     const newGameboard = gameboard();
 
     const getGameboard = () => newGameboard.getBoard();
+    const checkHit = (x, y) => newGameboard.receiveAttack(x, y);
 
     let returnFromGameboard;
     let i = 0;
@@ -57,7 +58,7 @@ function player(type) {
         }
     }
 
-    return { getGameboard };
+    return { getGameboard, checkHit };
 }
 
 export { player };
