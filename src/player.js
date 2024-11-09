@@ -29,20 +29,24 @@ function player(type) {
 
         if (type == 'hum') {
             console.log(`Ship ${i + 1} size: ${shipSize}`);
-            let x = Number(prompt('Choose the x coordinate of the ship (0-9).'));
-            let y = Number(prompt('Choose the y coordinate of the ship (0-9).'));
-            let direction = Number(prompt('Choose the direction of the ship - 0 for horizontal, 1 for vertical.'));
+            let x = prompt('Choose the x coordinate of the ship (0-9).');
+            let y = prompt('Choose the y coordinate of the ship (0-9).');
+            let direction = prompt('Choose the direction of the ship - 0 for horizontal, 1 for vertical.');
 
-            if (i == 0) { // Place each ship based on the user's inputs until there are five ships. Default values are used when nothing is entered.
-                returnFromGameboard = newGameboard.placeShip(shipSize, x = 2, y = 3, direction = 0); 
-            } else if (i == 1) {
-                returnFromGameboard = newGameboard.placeShip(shipSize, x = 8, y = 1, direction = 1);
-            } else if (i == 2) {
-                returnFromGameboard = newGameboard.placeShip(shipSize, x = 0, y = 0, direction = 0);
-            } else if (i == 3) {
-                returnFromGameboard = newGameboard.placeShip(shipSize, x = 9, y = 7, direction = 1);
-            } else if (i == 4) {
-                returnFromGameboard = newGameboard.placeShip(shipSize, x = 4, y = 4, direction = 0);
+            if (!x && !y && !direction) { // If nothing is entered, use the default values.
+                if (i == 0) {
+                    returnFromGameboard = newGameboard.placeShip(shipSize, 2, 3, 0); 
+                } else if (i == 1) {
+                    returnFromGameboard = newGameboard.placeShip(shipSize, 8, 1, 1);
+                } else if (i == 2) {
+                    returnFromGameboard = newGameboard.placeShip(shipSize, 0, 0, 0);
+                } else if (i == 3) {
+                    returnFromGameboard = newGameboard.placeShip(shipSize, 9, 7, 1);
+                } else if (i == 4) {
+                    returnFromGameboard = newGameboard.placeShip(shipSize, 4, 4, 0);
+                }
+            } else {
+                returnFromGameboard = newGameboard.placeShip(shipSize, Number(x), Number(y), Number(direction)); // Place each ship based on the user's inputs until there are five ships.
             }
         } else if (type == 'com') {
             returnFromGameboard = newGameboard.placeShip(shipSize, getRanInt(10), getRanInt(10), getRanInt(2)); // Randomly place each ship until there are five ships.
