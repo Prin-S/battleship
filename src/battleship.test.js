@@ -232,7 +232,7 @@ describe('player functions - getGameboard() for computer player', () => {
     });
 });
 
-describe('player functions - getGameboard() for human player', () => {
+/*describe('player functions - getGameboard() for human player', () => {
     let testPlayer2 = player('hum'); // When asked to enter a value, just press the enter key to skip. Default values are provided.
 
     expect(testPlayer2.getGameboard()).toEqual([
@@ -247,4 +247,4 @@ describe('player functions - getGameboard() for human player', () => {
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 4],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 4]
     ]);
-});
+});*/
