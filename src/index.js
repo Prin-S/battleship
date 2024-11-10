@@ -1,23 +1,24 @@
 import './styles.css';
 import { ship } from './ship.js';
 import { gameboard } from './gameboard.js';
-import { player } from './player.js';
+import { getRanInt, player } from './player.js';
 
-const currTurn = document.querySelector('#turn-box');
-let currTurnCode = 'hum';
-let won = false;
+const topBox = document.querySelector('#box0-text1');
 
 const humPlayer = player('com');
-const humBox = document.querySelector('#box1');
 const humBoard = document.querySelector('#human-board');
 
 const comPlayer = player('com');
-const comBox = document.querySelector('#box2');
 const comBoard = document.querySelector('#computer-board');
 
 const box3Text1 = document.querySelector('#box3-text1');
 const box3Text2 = document.querySelector('#box3-text2');
-const box3Text3 = document.querySelector('#box3-text3');
+
+const box4Text1 = document.querySelector('#box4-text1');
+const box4Text2 = document.querySelector('#box4-text2');
+
+let currTurn = 'hum';
+let won = false;
 
 function createBoard(board, type) {
     for (let i = 0; i < 10; i++) {
@@ -27,13 +28,11 @@ function createBoard(board, type) {
             square.setAttribute('id', `${type}-square-${i}-${j}`);
             square.setAttribute('class', 'square');
             
-            square.style['grid-column-start'] = j + 1;
-            square.style['grid-column-end'] = j + 2;
-            square.style['grid-row-start'] = i + 1;
-            square.style['grid-row-end'] = i + 2;
-
-            square.addEventListener('click', clickSquare.bind(this, type, i, j));
-            
+            square.style['grid-column-start'] = i + 1;
+            square.style['grid-column-end'] = i + 2;
+            square.style['grid-row-start'] = j + 1;
+            square.style['grid-row-end'] = j + 2;
+        
             if (type == 'hum') { // Only reveal ship positions for the human player's board.
                 if (humPlayer.getGameboard()[i][j] == 1) {
                     square.classList.add('five-square-ship');
@@ -48,8 +47,10 @@ function createBoard(board, type) {
                 }
             }
 
-            if (type == 'com') { // Only show the hover effect for the computer player's board.
-                square.classList.add('hoverable');
+            // The human player will be interacting on the computer player's board.
+            if (type == 'com') { // For each square on the computer player's board,
+                square.addEventListener('click', playerClickSquare.bind(this, i, j)); // Add an event listener.
+                square.classList.add('hoverable'); // Add the hover effect.
             }
             
             board.appendChild(square);
@@ -57,43 +58,70 @@ function createBoard(board, type) {
     }
 }
 
-function clickSquare(type, x, y) {
-    if (currTurnCode != type && !won) {
-        const currSquare = document.getElementById(`${type}-square-${x}-${y}`);
+function playerClickSquare(x, y) {
+    if (!won) {
+        box4Text1.innerHTML = `(${x}, ${y}) selected.`; // Show the message under the computer player's board.
+        box4Text2.innerHTML = comPlayer.checkHit(y, x);
+        currTurn = 'com';
 
-        let currPlayer;
+        modifySquareAndTexts(x, y, 'com');
 
-        if (currTurn.innerHTML == 'Your turn') {
-            currTurn.innerHTML = `Computer's turn`;
-            currTurnCode = 'com';
-            humBox.classList.add('current-turn-box');
-            comBox.classList.remove('current-turn-box');
-            currPlayer = comPlayer;
-        } else {
-            currTurn.innerHTML = 'Your turn';
-            currTurnCode = 'hum';
-            humBox.classList.remove('current-turn-box');
-            comBox.classList.add('current-turn-box');
-            currPlayer = humPlayer;
-        }
+        let comX, comY;
 
-        box3Text1.innerHTML = `(${x}, ${y}) selected.`;
-        box3Text2.innerHTML = `${currPlayer.checkHit(y, x)}`;
+        [comX, comY, box3Text2.innerHTML] = computerClickSquare();
+        box3Text1.innerHTML = `(${comX}, ${comY}) selected.`; // Show the message under the human player's board.
+        currTurn = 'hum';
 
-        if (box3Text2.innerHTML == 'Miss!') {
-            currSquare.setAttribute('class', 'square miss');
-        } else if (box3Text2.innerHTML == 'Hit!' || box3Text2.innerHTML == 'Hit - ship sunk!' || box3Text2.innerHTML == 'Hit - all ships sunk!') {
-            currSquare.setAttribute('class', 'square hit');
-        }
+        modifySquareAndTexts(comX, comY, 'hum');
+    }
+}
 
-        if (box3Text2.innerHTML == 'Hit - all ships sunk!' && currTurnCode == 'com') {
-            won = true;
-            box3Text3.innerHTML = 'You won!';
-        } else if (box3Text2.innerHTML == 'Hit - all ships sunk!' && currTurnCode == 'hum') {
-            won = true;
-            box3Text3.innerHTML = 'The computer won!';
+function modifySquareAndTexts(x, y, type) {
+    const currSquare = document.getElementById(`${type}-square-${x}-${y}`);
+
+    let currBox;
+
+    if (type == 'hum') { // Select the correct box the display the message.
+        currBox = box3Text2;
+    } else {
+        currBox = box4Text2;
+    }
+
+    // Color currSquare appropriately.
+    if (currBox.innerHTML == 'Miss!') {
+        currSquare.setAttribute('class', 'square miss');
+    } else if (currBox.innerHTML == 'Hit!' || currBox.innerHTML == 'Hit - ship sunk!' || currBox.innerHTML == 'Hit - all ships sunk!') {
+        currSquare.setAttribute('class', 'square hit');
+    }
+
+    // Check whether the game has ended.
+    if (currBox.innerHTML == 'Hit - all ships sunk!' && currTurn == 'com') {
+        won = true;
+        topBox.innerHTML = 'You won!';
+    } else if (currBox.innerHTML == 'Hit - all ships sunk!' && currTurn == 'hum') {
+        won = true;
+        topBox.innerHTML = 'The computer won!';
+    }
+}
+
+function computerClickSquare() {
+    let x = getRanInt(10);
+    let y = getRanInt(10);
+    let checkHitResult;
+    let i = 0;
+
+    while (i < 1) { // This is to prevent the computer player from selecting a square that has already been checked.
+        checkHitResult = humPlayer.checkHit(y, x);
+
+        if (checkHitResult == 'The square has already been selected - hit.' || checkHitResult == 'The square has already been selected - miss.') {
+            x = getRanInt(10);
+            y = getRanInt(10);
+        } else { // Once the computer player selects an unchecked square,
+            i++; // Exit the loop.
         }
     }
+
+    return [x, y, checkHitResult];
 }
 
 createBoard(humBoard, 'hum');

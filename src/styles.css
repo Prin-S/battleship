@@ -36,11 +36,6 @@ p, div, span, label, input, button {
     text-align: center;
 }
 
-.current-turn-box {
-    background-color: mistyrose;
-    border: thick double maroon;
-}
-
 #box0 {
     grid-column-start: 1;
     grid-column-end: 3;
@@ -64,6 +59,13 @@ p, div, span, label, input, button {
 
 #box3 {
     grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 3;
+    grid-row-end: 4;
+}
+
+#box4 {
+    grid-column-start: 2;
     grid-column-end: 3;
     grid-row-start: 3;
     grid-row-end: 4;
