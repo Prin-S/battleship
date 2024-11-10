@@ -29,10 +29,9 @@ function player(type) {
         }
 
         if (type == 'hum') {
-            console.log(`Ship ${i + 1} size: ${shipSize}`);
-            let x = prompt('Choose the x coordinate of the ship (0-9).');
-            let y = prompt('Choose the y coordinate of the ship (0-9).');
-            let direction = prompt('Choose the direction of the ship - 0 for horizontal, 1 for vertical.');
+            let x = prompt(`Ship ${i + 1}, size ${shipSize}: enter the x coordinate (0-9).`);
+            let y = prompt(`Ship ${i + 1}, size ${shipSize}: enter the y coordinate (0-9).`);
+            let direction = prompt(`Ship ${i + 1}, size ${shipSize}: enter the direction - 0 for horizontal, 1 for vertical.`);
 
             if (!x && !y && !direction) { // If nothing is entered, use the default values.
                 if (i == 0) {
@@ -48,6 +47,10 @@ function player(type) {
                 }
             } else {
                 returnFromGameboard = newGameboard.placeShip(shipSize, Number(x), Number(y), Number(direction)); // Place each ship based on the user's inputs until there are five ships.
+            }
+
+            if (typeof returnFromGameboard == 'string') {
+                alert(returnFromGameboard);
             }
         } else if (type == 'com') {
             returnFromGameboard = newGameboard.placeShip(shipSize, getRanInt(10), getRanInt(10), getRanInt(2)); // Randomly place each ship until there are five ships.
