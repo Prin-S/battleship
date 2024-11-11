@@ -7,6 +7,7 @@ let humPlayer;
 const topBoxDiv = document.querySelector('#box0');
 const topBox = document.querySelector('#box0-text1');
 const humBoard = document.querySelector('#human-board');
+const comBoard = document.querySelector('#computer-board');
 
 const testGameboard = gameboard(); // This is so that placeShip() can be used to test all ship placements.
 const playerships = [];
@@ -53,6 +54,7 @@ function getPlayerShipPositions() {
                 shipInputForm.innerHTML = ''; // Remove the previous form.
                 
                 createBoard(humBoard, 'hum'); // Create the gameboard for the human player.
+                createBoard(comBoard, 'com'); // Create the gameboard for the computer player.
             }
         } else {
             topBox.innerHTML = `Ship ${counter + 1}: size ${shipSize}<p>${returnFromTestGameboard}</p>`; // Display the message explaining why the values are invalid.
