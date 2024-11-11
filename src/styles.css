@@ -32,6 +32,10 @@ form {
     }
 }
 
+.button {
+    margin: 0 5px;
+}
+
 .box {
     background-color: snow;
     border: thick double slateblue;

@@ -2,7 +2,7 @@ import { gameboard } from './gameboard.js';
 import { player } from './player.js';
 import { createBoard } from './create-board.js';
 
-let humPlayer;
+let humPlayer = player('com');
 
 const topBoxDiv = document.querySelector('#box0');
 const topBox = document.querySelector('#box0-text1');
@@ -26,7 +26,7 @@ function getPlayerShipPositions() {
         shipSize = 2;
     }
 
-    topBox.innerHTML = `Ship ${counter + 1}: size ${shipSize}`; // Display the current ship number and size.
+    topBox.innerHTML = `Ship ${counter + 1}: size ${shipSize}`; // Display the current ship number and size. Also remove the two buttons in the initial function call.
 
     const shipInputForm = document.createElement('form');
     shipInputForm.addEventListener('submit', submitShipInputForm);
@@ -134,4 +134,4 @@ function getPlayerShipPositions() {
     topBoxDiv.appendChild(shipInputForm); 
 }
 
-export { getPlayerShipPositions, humPlayer };
+export { getPlayerShipPositions, humPlayer, humBoard, comBoard };
